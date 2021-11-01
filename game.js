@@ -1,16 +1,16 @@
 function Bear() { 
-    this.dBear = 100; 
-    this.htmlElement = document.getElementById("bear"); 
+    this.dBear = 100; //bear step length
+    this.htmlElement = document.getElementById("bear"); //bear image
     this.id = this.htmlElement.id; 
     this.x = this.htmlElement.offsetLeft; 
     this.y = this.htmlElement.offsetTop; 
-    this.move = function(xDir, yDir) { 
-        this.x += this.dBear * xDir; 
-        this.y += this.dBear * yDir; 
-        this.display(); 
+    this.move = function(xDir, yDir) {  //horizontal, vertical moves the bear step
+        this.x += this.dBear * xDir; //it updates the x poistion 
+        this.y += this.dBear * yDir; //it updates the y poisition 
+        this.display();  //display update
     }; 
     this.display = function() { 
-        this.fitBounds(); //we add this instruction to keep bear within board
+        this.fitBounds(); //for the bear to stay in the board and not go outside of the board space
         this.htmlElement.style.left = this.x + "px"; 
         this.htmlElement.style.top = this.y + "px"; 
         this.htmlElement.style.display = "block"; 
@@ -23,8 +23,10 @@ function Bear() {
         let t = parent.offsetTop;
         let w = parent.offsetWidth;
         let h = parent.offsetHeight;
-        if (this.x < 0) this.x = 0;
+        //if it goes out of the board then it will come back to the board (horizontally)
+        if (this.x < 0) this.x = 0; 
         if (this.x > w - iw) this.x = w - iw;
+        //if it goes out of the board then it will come back to the board (vertically)
         if (this.y < 0) this.y = 0;
         if (this.y > h - ih) this.y = h - ih;
     };
@@ -40,10 +42,10 @@ function start() {
     makeBees();
     // move the bees around with the specified speed
     updateBees();
-    //take start time 
     lastStingTime = new Date();
-    // Add an event listener to the bear speed event
     document.getElementById("speedBear").addEventListener("change",setSpeed);
+   
+   
 }
 function restart() {
     score = 0;
@@ -83,7 +85,7 @@ function moveBear(e) {
     }  
 }
 function setSpeed(){
-    bear.dBear = parseInt(document.getElementById("speedBear").value);
+    bear.dBear = parseInt(document.getElementById("speedBear").value); //speed of the value in the input field 
 }
 class Bee {
     constructor(beeNumber) {
@@ -129,7 +131,7 @@ class Bee {
     } 
 }
 function getRandomInt(max) {
-    return Math.floor((Math.random()) * max);
+    return Math.floor((Math.random()) * max); //gives a random number between the integer 0 to max
 }
 function createBeeImg(wNum) { 
     //get dimension and position of board div 
@@ -144,7 +146,7 @@ function createBeeImg(wNum) {
     img.setAttribute("width", "100"); 
     img.setAttribute("alt", "A bee!"); 
     img.setAttribute("id", "bee" + wNum); 
-    img.setAttribute("class", "bee"); //set class of html tag img 
+    img.setAttribute("class", "bee"); 
     //add the IMG element to the DOM as a child of the board div 
     img.style.position = "absolute"; 
     boardDiv.appendChild(img); 
@@ -175,12 +177,12 @@ function makeBees() {
     } 
 }
 function addBee() {
-    let nbBees = document.getElementById("nbBees").value; //Get the number of bees specified by the user
-    nbBees = Number(nbBees); //Convert the content of the input to a number
+    let nbBees = document.getElementById("nbBees").value; 
+    nbBees = Number(nbBees); 
     nbBees++;
-    var bee = new Bee(nbBees); //Create a bee
-    bee.display(); //Display the bee on screen
-    bees.push(bee); //Add the bee to the bees array
+    var bee = new Bee(nbBees); 
+    bee.display(); 
+    bees.push(bee); 
 }
 function removeBees() {
     beesArray = document.getElementsByClassName("bee");
@@ -205,11 +207,11 @@ function updateBees() { // update loop for game
     //update the timer for the next move 
     let score = hits.innerHTML;
     if (Number(score) < 1000) {
-        updateTimer = setTimeout('updateBees()', period); //Update the bees movement after the specified interval
+        updateTimer = setTimeout('updateBees()', period); 
     } else {
-        score = "Game Over"
+        score = "Game Over" //it will show as Game Over
         hits.innerHTML = score;
-        updateTimer = clearTimeout();
+        updateTimer = clearTimeout(); //
     }
 }
 function isHit(defender, offender) { 
